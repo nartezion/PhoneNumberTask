@@ -1,12 +1,7 @@
-package first.steps.in.Selenium;
-
-import java.sql.Array;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Scanner;
-import java.util.SortedMap;
 
-public class Main {
+
+public class PhoneNumberTask {
 
     public static void main(String[] args) {
         boolean isNumberValid = false;
@@ -47,9 +42,8 @@ public class Main {
         }
         System.out.println("Phone number is correct.");
         System.out.println("________________________________________");
-        char[] numbers = number.toCharArray();
         if(number.startsWith("+")){
-            number=number.substring(number.length()-10,number.length());
+            number=number.substring(number.length()-(number.length()-1),number.length());
         }
         long valueOfNumber = Long.parseLong(number);
         long sumOfDigits = sumOfNumbers(valueOfNumber);
