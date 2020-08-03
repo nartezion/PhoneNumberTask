@@ -9,13 +9,14 @@ public class PhoneNumberTask {
         Scanner scanner = new Scanner(System.in);
         String number = scanner.nextLine();
         if (number.length() > 10) {
-            if (numberContainsOnlyDigits(number) &&
-                    numberHasCorrectPrefix(number) && numberHasValidOperatorPrefix(number)) {
+            if (number.substring(0, number.length() - 10).matches("(38|8|\\D38|0038)") &&
+                    number.substring(number.length() - 10, number.length())
+                            .matches("(067\\d{7}|093\\d{7}|050\\d{7})")) {
                 isNumberValid = true;
             }
         }
         if (number.length() == 10) {
-            if (numberContainsOnlyDigits(number) && numberHasValidOperatorPrefix(number)) {
+            if (number.matches("(067\\d{7}|093\\d{7}|050\\d{7})")) {
                 isNumberValid = true;
             }
         }
@@ -29,21 +30,22 @@ public class PhoneNumberTask {
                 number = scanner.nextLine();
             }
             if (number.length() > 10) {
-                if (numberContainsOnlyDigits(number) &&
-                        numberHasCorrectPrefix(number) && numberHasValidOperatorPrefix(number)) {
+                if (number.substring(0, number.length() - 10).matches("(38|8|\\D38|0038)")
+                        && number.substring(number.length() - 10, number.length())
+                        .matches("(067\\d{7}|093\\d{7}|050\\d{7})")) {
                     isNumberValid = true;
                 }
             }
             if (number.length() == 10) {
-                if (numberContainsOnlyDigits(number) && numberHasValidOperatorPrefix(number)) {
+                if (number.matches("(067\\d{7}|093\\d{7}|050\\d{7})")) {
                     isNumberValid = true;
                 }
             }
         }
         System.out.println("Phone number is correct.");
         System.out.println("________________________________________");
-        if(number.startsWith("+")){
-            number=number.substring(number.length()-(number.length()-1),number.length());
+        if (number.startsWith("+")) {
+            number = number.substring(number.length() - (number.length() - 1), number.length());
         }
         long valueOfNumber = Long.parseLong(number);
         long sumOfDigits = sumOfNumbers(valueOfNumber);
@@ -57,7 +59,7 @@ public class PhoneNumberTask {
         if (sumOfDigits > 4) {
             System.out.println("Final result is: " + sumOfDigits);
         } else {
-            switch ((int)sumOfDigits) {
+            switch ((int) sumOfDigits) {
                 case (1):
                     System.out.println("Final result is: One");
                     break;
@@ -72,48 +74,6 @@ public class PhoneNumberTask {
                     break;
             }
         }
-    }
-
-    public static boolean numberContainsOnlyDigits(String string) {
-        char[] numbers = string.toCharArray();
-        String[] strNumbers = new String[numbers.length];
-        for (int i = 0; i < numbers.length; i++) {
-            String numberValue = String.valueOf(numbers[i]);
-            strNumbers[i] = numberValue;
-        }
-        if (strNumbers[0].equals("+")) {
-            for (int i = 0; i < strNumbers.length - 1; i++) {
-                if (strNumbers[i + 1].matches("\\D")) {
-                    return false;
-                }
-            }
-        }
-        if (!strNumbers[0].equals("+")) {
-            for (String strNumber : strNumbers) {
-                if (strNumber.matches("\\D")) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-
-    public static boolean numberHasCorrectPrefix(String string) {
-        String correctPrefix1 = "+38";
-        String correctPrefix2 = "38";
-        String correctPrefix3 = "0038";
-        String correctPrefix4 = "8";
-        return string.startsWith(correctPrefix1) || string.startsWith(correctPrefix2) ||
-                string.startsWith(correctPrefix3) || string.startsWith(correctPrefix4);
-    }
-
-    public static boolean numberHasValidOperatorPrefix(String string) {
-        String lastFourDigitsOfNumber = string.substring(string.length() - 10, string.length());
-        String lifePrefix = "093";
-        String vodafonePrefix = "050";
-        String kyivstarPrefix = "067";
-        return lastFourDigitsOfNumber.startsWith(lifePrefix) || lastFourDigitsOfNumber.startsWith(vodafonePrefix) ||
-                lastFourDigitsOfNumber.startsWith(kyivstarPrefix);
     }
 
     public static long sumOfNumbers(long valueOfNumber) {
